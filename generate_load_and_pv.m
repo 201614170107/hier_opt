@@ -9,7 +9,7 @@ for p=1:shuffle_interval:floor(ix(end)/(shuffle_interval))*shuffle_interval-shuf
         try
         P_shuffled(find(ix==ix2(q)),:)=P_Load(find(ix==ix3(q)),:);
         catch
-            disp('codio')
+            disp('err')
         end
     end
 end

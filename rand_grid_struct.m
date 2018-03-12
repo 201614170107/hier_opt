@@ -74,7 +74,7 @@ classdef rand_grid_struct < handle
             q_labels = labels(~cellfun(@isempty,(regexp(labels, 'q\d')))); % match any field with name as q* where * is a number
             if ~isempty(q_labels) % if there are Queens, go on recursively
                 level = random_populate_workers(obj,level,length(q_labels)+1); % Consider n+(1+nq) connections
-                level.Branch = Branch(obj.H,level.V_ref,level.P_ref,obj.f_method); % create a Queen object containing forecasters for voltages and powers
+                level.Branch = Branch(obj.H,level.V_ref,level.P_ref,obj.f_method,obj.N); % create a Queen object containing forecasters for voltages and powers
                 % go on recursively
                 for i=1: length(q_labels)
                     [level.(q_labels{i}),n_level_max(i)] = random_populate_levels(obj,level.(q_labels{i}),n_level);
@@ -82,7 +82,7 @@ classdef rand_grid_struct < handle
                 n_level_max = max(n_level_max);
             else    % if we are in a terminal queen, populate with random workers
                 level = random_populate_workers(obj,level,1);
-                level.Branch = Branch(obj.H,level.V_ref,level.P_ref,obj.f_method); % create a Queen object containing forecasters for voltages and powers
+                level.Branch = Branch(obj.H,level.V_ref,level.P_ref,obj.f_method,obj.N); % create a Queen object containing forecasters for voltages and powers
                 n_level_max = 0;
             end
            n_level_max = max(n_level,n_level_max); 
@@ -101,14 +101,15 @@ classdef rand_grid_struct < handle
             num_w = randperm(obj.rand_range,1);
             norm_factor = level.P_ref/(num_w); % each agent is dimensioned to have a reasonable power profile and storage w.r.t. the nominal power of the level
             
-            use_real_data = 1;
+            use_real_data = 0;
             if use_real_data
                 load('load_pv_data')
                 for i=1:num_w
                     Pm(:,i) = mean(reshape(generate_load_and_pv(P_Load,P_PV, 10, 1, 1, [2 10],90),2,[]));
                 end
                 violPerc=0.1;
-                gain = fmincon(@(x) (violPerc-get_violation_perc(x*Pm,level.P_ref))^2,0.001,[],[],[],[],0,10);
+                opts = optimoptions('fmincon','Display','off');
+                gain = fmincon(@(x) (violPerc-get_violation_perc(x*Pm,level.P_ref))^2,0.001,[],[],[],[],0,10,[],opts);
                 
                 for i=1:num_w
                     level.workers(i) = battery(dwp.eta_in,dwp.eta_out,dwp.ts,dwp.tau_sd,dwp.lifetime,dwp.DOD,dwp.Nc,level.P_ref/(num_w),dwp.c,dwp.h,dwp.t,gain*Pm(:,i),dwp.f_method,dwp.selfish); % 3 hours autonomy if the worker had average power consumption

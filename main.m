@@ -36,17 +36,17 @@ c = 1;                      % C factor [kW/kWh]
 grid_scheleton = [];
 
 % top level
-grid_scheleton.V_ref = 1; %kV
-grid_scheleton.P_ref = 1; %kW
-% 
-% % second level
-grid_scheleton.q1.V_ref = 0.5; %kV
-grid_scheleton.q1.P_ref = 0.5; %kW
+grid_scheleton.V_ref = 1; 
+grid_scheleton.P_ref = 1; 
 
-% % 
-% % % third level
-grid_scheleton.q1.q1.V_ref = 0.25; %kV
-grid_scheleton.q1.q1.P_ref = 0.25; %kW
+% second level
+grid_scheleton.q1.V_ref = 0.5; 
+grid_scheleton.q1.P_ref = 0.5; 
+
+
+% third level
+grid_scheleton.q1.q1.V_ref = 0.25; 
+grid_scheleton.q1.q1.P_ref = 0.25; 
 
 
 grid_topology = []; % do not specify grid topology 
@@ -72,4 +72,4 @@ hi_aggr = hieragg(gridstr,pb,ps,H,t_prox,DSO_ref,tol);
 results = hi_aggr.mpc_step(timestep,opts);
 
 
-% save('one_case_results.mat','results')
+save('one_case_results.mat','results')

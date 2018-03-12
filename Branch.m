@@ -22,19 +22,19 @@ classdef Branch < handle
         h_f             % figure handle
     end
     methods
-        function obj = Branch(H,V_ref,P_ref,f_method,P_unc_perfect,V_perfect)
+        function obj = Branch(H,V_ref,P_ref,f_method,N,P_unc_perfect,V_perfect)
             % Inputs:
             %        - workers: vector of Workers in the Queen. Needed for
             %        retrieving their
             
-            if nargin<5
-                obj.P_unc_perfect = zeros(H,1); % Base case: no non-Workers in the Queen
+            if nargin<6
+                obj.P_unc_perfect = zeros(N,1); % Base case: no non-Workers in the Queen
             else
                 obj.P_unc_perfect = P_unc_perfect;
             end
             
-            if nargin<6
-                obj.V_perfect = V_ref*ones(H,1); % We forecast a value equal to V_ref
+            if nargin<7
+                obj.V_perfect = V_ref*ones(N,1); % We forecast a value equal to V_ref
             else
                 obj.V_perfect = V_perfect;
             end

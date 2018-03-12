@@ -199,19 +199,31 @@ for i=1:n_subplot
         plot([result_scheleton.P,result_scheleton.Branch.y_s,P_target]);
         plot([result_scheleton.p_min,result_scheleton.p_max],'--');
         legend({'P start','P aggregate','y s','P target','P min','P max'});
+        xlabel('timestep')
+        ylabel('Power [p.u.]')
+        title('Power')
         hold off;
     elseif strcmp(variable_i,'V')
         plot(initial_vars.V);hold on;
         plot([result_scheleton.V,result_scheleton.Branch.y_v]);
         plot([result_scheleton.v_min,result_scheleton.v_max],'--');
         legend({'V start','V','y v','V min','V max'});
+        xlabel('timestep')
+        ylabel('Voltage [p.u.]')
+        title('Voltage')
         hold off;
     elseif strcmp(variable_i,'E')
             plot(result_scheleton.e_workers);
             legend('e workers')
+            xlabel('timestep')
+            ylabel('SOC [-]')
+            title('State of charge')
     elseif strcmp(variable_i,'D')
         plot(result_scheleton.lambdas);
         legend({'lambda s','lambda v'});
+        xlabel('timestep')
+        ylabel('lambdas')
+        title('Lagrangian multipliers')
     end
     
     drawnow
