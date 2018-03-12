@@ -1,4 +1,3 @@
-# hier_opt
 # Constrained multilevel hierarchical optimization for energy markets 
 Distributed control strategy for the design of an energy market. The method relies on a hierarchical structure of aggregators (Queens) for the coordination of prosumers (Woekers). The hierarchy reflects the voltage level separations of the electrical grid and allows aggregating prosumers in pools, while taking into account the grid operational constraints. To reach optimal coordination, the prosumers communicate their forecasted power profile to the upper level of the hierarchy. Each time the information crosses upwards a level of the hierarchy, it is first aggregated, both to strongly reduce the data flow and to preserve the privacy. The mathematical derivation of the algorithm is described in [1].
 
