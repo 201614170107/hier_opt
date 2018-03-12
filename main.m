@@ -1,6 +1,6 @@
 % main
-% Sovle the traking problem of the aggregated profile of a prosumer
-% community, in a distributed way through proximal algorithm.
+% Sovles the tracking problem of the aggregated profile of a prosumer
+% community, in a distributed way, through proximal algorithm.
 
 clear 
 close all
@@ -9,10 +9,10 @@ rng(0)
 
 %% |--------------------------- Set parameter ---------------------------|
     
-H = 24*2;               % Timesteps per horizon, considering dayly horizons
+H = 24*2;               % Timesteps per horizon, considering daily horizons
 t_prox = 1.5;             % proxy constant and inverse of lambda step
 selfish = false;        % agents are cooperative
-rand_range = 10;        % maximum number of agents per branch
+rand_range = 19;        % maximum number of agents per branch
 n = 30;                 % number of days in generated data
 N = n*H;                % total number of timesteps
 DSO_ref = zeros(N,1);   % tracking profile - 0s = quadratic peak shaving 
@@ -63,12 +63,15 @@ gridstr = rand_grid_struct(grid_scheleton,rand_range,grid_topology,...
           defauLt_worker_pars,H,N,slack_b);
 
 % create hierarchical aggregator
-tol = 1e-3;
-timestep = 1;
-opts.selfish = false;
-opts.fb_split = true;
+tol = 1e-3;                 % tolerance for convergence
+timestep = 1;               % solves the first timestep of the coordination problem
+opts.selfish = false;       % if true, agent assume selfish behavior (do not take into account grid constraints)
+opts.fb_split = true;       % project top level variables back to feasibility
 
 hi_aggr = hieragg(gridstr,pb,ps,H,t_prox,DSO_ref,tol);
+
+%% |--------------------------- Coordinate ------------------------------| 
+
 results = hi_aggr.mpc_step(timestep,opts);
 
 

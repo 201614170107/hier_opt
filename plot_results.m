@@ -214,7 +214,6 @@ for i=1:n_subplot
         hold off;
     elseif strcmp(variable_i,'E')
             plot(result_scheleton.e_workers);
-            legend('e workers')
             xlabel('timestep')
             ylabel('SOC [-]')
             title('State of charge')
