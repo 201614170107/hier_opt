@@ -21,4 +21,4 @@ The code is distributed under MIT licence.
 References
 =====
 
- [[1]](https://arxiv.org/abs/1803.03560) *L.Nespoli, V.Medici, Constrained hierarchical networked optimization for energy markets,2018*
+ [[1]](https://arxiv.org/abs/1803.03560) *L.Nespoli, V.Medici, Constrained hierarchical networked optimization for energy markets, 2018*
