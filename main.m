@@ -1,5 +1,5 @@
 % main
-% Sovles the tracking problem of the aggregated profile of a prosumer
+% Solves the tracking problem of the aggregated profile of a prosumer
 % community, in a distributed way, through proximal algorithm.
 
 clear 
